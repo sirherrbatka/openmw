@@ -36,6 +36,13 @@ namespace CSMSettings
         Setting findSetting(const QString& key) const;
 
         void storeSetting(const QString& key, const Setting& setting);
+
+    protected:
+        QVariant getKeyFromRow(const int row);
+
+        void setKeyFromRow(const int row, const QVariant& value);
+
+        QVariant getGroupFromRow(const int row);
     };
 }
 #endif // CSMSETTINGS_QSETTINGMANAGER_HPP
