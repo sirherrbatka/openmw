@@ -1,18 +1,178 @@
+\newcommand{\ReferenceableSpec}[4]{ %{type name}{Quick desc.}{Behaviour}{collection of \ReferencableParam{}{} entries}
+
+ \begin{center}
+  \colorbox{lightgray}{
+   \begin{tabular}{@{}p{5cm}p{8.5cm}}
+    \colorbox{gray}{
+     \begin{minipage}[t]{4.5cm}
+      \normalsize{\textbf{Type: #1}}\\\scriptsize
+      #2\\\\
+      \normalsize{Behaviour:}\\\scriptsize
+      #3\\
+      \normalsize
+     \end{minipage}
+    } &    
+    \begin{minipage}[t]{8.5cm}
+     \textbf{Parameters:}\\\\
+     #4
+    \end{minipage}
+   \end{tabular}
+  }
+ \end{center}
+}
+
+\newcommand{\ReferencableParam}[2]{  %{Parameter}{Description}
+ \begin{tabular}{@{}p{2.5cm}p{5.5cm}}
+ \textbf{\scriptsize{#1}} & \scriptsize{#2}\\
+ \end{tabular}
+}
+
+\newcommand{\interactbutton}[0]{ \emph{interact} button }
+
+\newcommand{\OnActivate}[0]{ \texttt{OnActivate} }
+\newcommand{\OnDeath}[0]{ \texttt{OnDeath} }
+\newcommand{\OnKnockout}[0]{ \texttt{OnKnockout} }
+\newcommand{\OnMurder}[0]{ \texttt{OnMurder} }
+\newcommand{\OnPCAdd}[0]{ \texttt{OnPCAdd} }
+\newcommand{\OnPCDrop}[0]{ \texttt{OnPCDrop} }
+\newcommand{\OnPCEquip}[0]{ \texttt{OnPCEquip} }
+\newcommand{\OnPCHitMe}[0]{ \texttt{OnPCHitMe} }
+\newcommand{\OnPCRepair}[0]{ \texttt{OnPCRepair} }
+\newcommand{\OnPCSoulGemUse}[0]{ \texttt{OnPCSoulGemUse} }
+\newcommand{\OnRepair}[0]{ \texttt{OnRepair} }
+
+\newcommand{\CastOnce}[0]{\emph{Cast Once}}
+\newcommand{\WhenStrikes}[0]{\emph{When Strikes}}
+\newcommand{\WhenUsed}[0]{\emph{When Used}}
+\newcommand{\ConstEffect}[0]{\emph{Constant Effect}}
+
+
 \section{Record Types}
 
 \subsection{Introduction}
 A gameworld contains many objects, such as chests, weapons and monsters. All these objects are merely instances of templates that we call Referenceables. The OpenCS Referenceables table contains information about each of these template objects, eg. its value and weight in the case of items and an aggression level in the case of NPCs.
 
-Let's go through all Record Types and discuss what you can tell OpenCS about them.
+\noindent
+When creating a plugin, you may wish to add your own referencables to the game such as new items, creatures, etc. If your item is truely unique (\emph{e.g.} you want to create your own weapon with absurdly high damage) you can use the Referencables list to create a new entry (or clone an existing one) that describes your item. Once it exists in the Referencables list, you can place a \textbf{Reference} to the item into the game world which the player can see and/or interact with. All (?) referenceables can have a script attached which will run once per frame while a reference to that referenceable is in an active cell in--game.\\
+\\
+\noindent
+\emph{Referencables} are accessed through the \emph{World$\rightarrow$Referencables} menu, which will bring up a subview containing a list of all referenceables in the game data. This covers all items, creatures, static objects such as rocks and buildings, etc. There are several distinct types of referencable which behave in different ways. The different types can be seen in the \emph{Record Type} column in the list view in OpenCS. The following section describes these types, their behaviour, and their parameters.\\
 
-\begin{description}
- \item[Activator:] When the player enters the same cell as this object, a script is started. Often it also has a \textbf{Script} attached to it, though it not mandatory. These scripts are small bits of code written in a special scripting language that OpenCS can read and interpret.
- \item[Potion:] This is a potion that is not self-made. It has an \textbf{Icon} for your inventory, Aside from the self-explanatory \textbf{Weight} and \textbf{Coin Value}, it has an attribute called \textbf{Auto Calc} set to ``False''. This means that the effects of this potion are preconfigured. This does not happen when the player makes their own potion.
- \item[Apparatus:] This is a tool to make potions. Again there's an icon for your inventory as well as a weight and a coin value. It also has a \textbf{Quality} value attached to it: higher the number, the better the effect on your potions will be. The \textbf{Apparatus Type} describes if the item is a Calcinator, Retort, Alembir or Mortar & Pestal. Each has a different effect on the potion the player makes. For more information on this subject, please refer to the \href{http://www.uesp.net/wiki/Morrowind:Alchemy#Tools}{UESP page on Alchemy Tools}.
- \item[Armor:] This type of item adds \textbf{Enchantment Points} to the mix. Every piece of clothing or armor has a ''pool'' of potential magicka that gets unlocked when you enchant it. Strong enchantments consume more magicka from this pool: the stronger the enchantment, the more Enchantment Points each cast will take up. For more information on this subject, please refer to the \href{Enchant page on UESP}{http://www.uesp.net/wiki/Morrowind:Enchant}. \textbf{Health} means the amount of hit points this piece of armor has. If it sustains enough damage, the armor will be destroyed. Finally, \textbf{Armor Value} tells the game how much points to add to the player character's Armor Rating.
- \item[Book:] This includes scrolls and notes. For the game to make the distinction between books and scrolls, an extra property, \textbf{Scroll}, has been added. Under the \textbf{Skill} column a scroll or book can have an in-game skill listed. Reading this item will raise the player's level in that specific skill. For more information on this, please refer to the \href{Skill Books page on UESP}{http://www.uesp.net/wiki/Morrowind:Skill_Books}.
- \item[Clothing:] These items work just like Armors, but confer no protective properties. Rather than ``Armor Type'', these items have a ``Clothing Type''.
- \item[Container:] This is all the stuff that stores items, from chests to sacks to plants. Its \textbf{Capacity} shows how much stuff you can put in the container. You can compare it to the maximum allowed load a player character can carry (who will get over-encumbered and unable to move if he crosses this threshold). A container, however, will just refuse to take the item in question when it gets ''over-encumbered''. \textbf{Organic Container}s are containers such as plants. Containers that \textbf{Respawn} are not safe to store stuff in. After a certain amount of time they will reset to their default contents, meaning that everything in it is gone forever.
- \item[Creature:] These can be monsters, animals and the like. 
- 
-\end{description}
+\ReferenceableSpec
+{Activator}
+{Static (potentially animated) items the user can use the \interactbutton{} on in the game world.}
+{When the PC interacts with a reference to an activator, the \OnActivate{} block of the attached script will be executed.}
+{
+ \ReferencableParam{Model}{The model file of the object that appears in game. For Morrowind, typically a \emph{.nif}}
+
+ \ReferencableParam{Name}{The name that appears when the player points the crosshair at the model in--game.}
+
+ \ReferencableParam{Script}{The ID of the script (optionally?) containing an \OnActivate{} block.}
+}
+
+\ReferenceableSpec
+{Potion}
+{\textbf{\emph{Predefined}} potions that appear in the game as consumable items.}
+{Potions are items that can be picked up, appear in the player inventory, and be `drunk' by using them to impart effects on the user.}
+{
+ \ReferencableParam{Model}{The model file of the object that appears in game. For Morrowind, typically a \emph{.nif}}
+
+ \ReferencableParam{Name}{The name that appears when the player points the crosshair at the model in--game and in inventories.}
+
+ \ReferencableParam{Script}{The ID of a script with (optional) \mbox{\OnPCAdd,} \mbox{\OnPCDrop,} \OnPCEquip{} blocks.}
+
+ \ReferencableParam{Icon}{The image file containing the icon displayed in inventories.}
+
+ \ReferencableParam{Weight}{The weight of the potion in inventories.}
+
+ \ReferencableParam{Coin Value}{The base cost of the item, not accounting for NPC disposition and PC/NPC mercantile skills.}
+
+ \ReferencableParam{Auto Calc}{If set true, the value of the potion is computed automatically by the game engine.}
+ \footnote{Where is potion effect listed or set?}
+}
+
+\ReferenceableSpec
+{Apparatus}
+{These are items used for alchemy in--game.}
+{Apparatus items can be picked up, appear in the player inventory, and be used for alchemy.}
+{
+ \ReferencableParam{Model}{The model file of the object that appears in game. For Morrowind, typically a \emph{.nif}}
+
+ \ReferencableParam{Name}{The name that appears when the player points the crosshair at the model in--game and in inventories.}
+
+ \ReferencableParam{Script}{The ID of a script with (optional) \mbox{\OnPCAdd,} \mbox{\OnPCDrop,} \OnPCEquip{}\footnote{not sure about \OnPCEquip...?} blocks.}% \footnote{I had no idea apparatus could be scripted!}}
+
+ \ReferencableParam{Icon}{The image file containing the icon displayed in inventories.}
+
+ \ReferencableParam{Weight}{The weight of the potion in inventories.}
+
+ \ReferencableParam{Coin Value}{The base cost of the item, not accounting for NPC disposition and PC/NPC mercantile skills.} 
+
+ \ReferencableParam{Quality}{I assume this is a multiplier for the potion strength?}
+
+ \ReferencableParam{Apparatus Type}{One of the 4 types of apparatus: \mbox{Mortar \& Pestle}, Alembic, Calcinator or Retort.}
+}
+
+\ReferenceableSpec
+{Armor}
+{Armor items offer protection from physical attack to the PC in--game.}
+{Armor items can be picked up, appear in the player inventory, and be worn by the PC. They can also have an attached \emph{Enchantment} ID.}
+{
+ \ReferencableParam{Model}{The model file of the object that appears in game. For Morrowind, typically a \emph{.nif}}
+
+ \ReferencableParam{Name}{The name that appears when the player points the crosshair at the model in--game and in inventories.}
+
+ \ReferencableParam{Script}{The ID of a script with (optional) \mbox{\OnPCAdd,} \mbox{\OnPCDrop,} \mbox{\OnPCEquip,} \mbox{\OnPCRepair,} \OnRepair{}\footnote{Probably not \OnRepair...?} blocks.}
+
+ \ReferencableParam{Icon}{The image file containing the icon displayed in inventories.}
+
+ \ReferencableParam{Weight}{The weight of the armor in inventories.}
+
+ \ReferencableParam{Coin Value}{The base cost of the item, not accounting for NPC disposition and PC/NPC mercantile skills.} 
+
+ \ReferencableParam{Enchantment}{The ID(?) of an enchantment listed in the subview opened with menu: \emph{Mechanics$\rightarrow$Enchantments}. Supports enchantment types \WhenUsed{} and \ConstEffect.}
+
+ \ReferencableParam{Enchantment Points}{The maximum level to which this item can be enchanted.}
+
+ \ReferencableParam{Armor Type}{Type of armor. Helmet, Cuirass, \emph{etc}.}
+
+ \ReferencableParam{Health}{How undamaged this item is. At 0, this item can no longer be used until it is repaired.}
+
+ \ReferencableParam{Armor Value}{Amount of protection offered by this piece of armour.} 
+}
+
+\ReferenceableSpec
+{Book}
+{Books are as they appear: In--game books the player can read.}
+{Book items can be picked up and appear in the player inventory, They can also have an attached \emph{Enchantment} ID. When activated, they will `open' for the player to read.}
+{
+ \ReferencableParam{Model}{The model file of the object that appears in game. For Morrowind, typically a \emph{.nif}}
+
+ \ReferencableParam{Name}{The name that appears when the player points the crosshair at the model in--game and in inventories.}
+
+ \ReferencableParam{Script}{The ID of a script with (optional) \mbox{\OnActivate,} \mbox{\OnPCAdd,} \OnPCDrop{} blocks.}
+
+ \ReferencableParam{Icon}{The image file containing the icon displayed in inventories.}
+
+ \ReferencableParam{Weight}{The weight of the book in inventories.}
+
+ \ReferencableParam{Coin Value}{The base cost of the item, not accounting for NPC disposition and PC/NPC mercantile skills.} 
+
+ \ReferencableParam{Enchantment}{The ID(?) of an enchantment listed in the subview opened with menu: \emph{Mechanics$\rightarrow$Enchantments}. Supports enchantment type \CastOnce{}.}
+
+ \ReferencableParam{Enchantment Points}{The maximum level to which this item can be enchanted.}
+
+ \ReferencableParam{Scroll}{If set \emph{true}, this book will appear as a scroll when opened.}
+
+ \ReferencableParam{Attribute}{If this book teaches a skill, then the PC attribute to be raised by 1 point is specified here.} 
+}
+
+
+
+\ReferenceableSpec
+{type name.}
+{Quick desc.}
+{Behaviour description.}
+{
+ \ReferencableParam{one of}{these entries for each param}
+}
