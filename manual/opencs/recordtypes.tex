@@ -167,6 +167,76 @@ When creating a plugin, you may wish to add your own referencables to the game s
  \ReferencableParam{Attribute}{If this book teaches a skill, then the PC attribute to be raised by 1 point is specified here.} 
 }
 
+\ReferenceableSpec
+{Clothing}
+{Similar to Armor: Wearable items that offer no physical protection.}
+{Clothing items can be picked up, appear in the player inventory, and be worn by the PC. They can also have an attached \emph{Enchantment} ID.}
+{
+ \ReferencableParam{Model}{The model file of the object that appears in game. For Morrowind, typically a \emph{.nif}}
+
+ \ReferencableParam{Name}{The name that appears when the player points the crosshair at the model in--game and in inventories.}
+
+ \ReferencableParam{Script}{The ID of a script with (optional) \mbox{\OnPCAdd,} \mbox{\OnPCDrop,} \OnPCEquip{}  blocks.}
+
+ \ReferencableParam{Icon}{The image file containing the icon displayed in inventories.}
+
+ \ReferencableParam{Weight}{The weight of the book in inventories.}
+
+ \ReferencableParam{Coin Value}{The base cost of the item, not accounting for NPC disposition and PC/NPC mercantile skills.} 
+
+ \ReferencableParam{Enchantment}{The ID(?) of an enchantment listed in the subview opened with menu: \emph{Mechanics$\rightarrow$Enchantments}. Supports enchantment types \WhenUsed{} and \ConstEffect.}
+
+ \ReferencableParam{Enchantment Points}{The maximum level to which this item can be enchanted.}
+
+ \ReferencableParam{Clothing Type}{Governs which part of the body this clothing is worn on when equipped.} 
+}
+
+\ReferenceableSpec
+{Container}
+{Specifies something that can hold other items.}
+{Containers `open' when activated by the user, opening an inventory of items. Items can then be transferred between the container and player inventory. Containers can also be \emph{organic}, so items cannot be placed in them\footnote{is this right?} and set to respawn their contents\footnote{on what timescale?}.}
+{
+ \ReferencableParam{Model}{The model file of the object that appears in game. For Morrowind, typically a \emph{.nif}}
+
+ \ReferencableParam{Name}{The name that appears when the player points the crosshair at the model in--game.}
+
+ \ReferencableParam{Script}{The ID of a script with (optional) \OnActivate{} block\footnote{are there other blocks too?}.}
+
+ \ReferencableParam{Weight Capacity}{The maximum total weight that can be stored in this container.}
+
+ \ReferencableParam{Organic Container}{Set true for plants, \emph{etc}.\footnote{what effect does this have?}}
+
+ \ReferencableParam{Respawn}{Set true to make container respawn contents every 72 game hours/footnote{just guessing}.}
+}
+
+\ReferenceableSpec
+{Creature}
+{Describes a living creature.}
+{I'm going to need to think about the best way to do this one!}
+{
+ \ReferencableParam{Far too many}{parameters to list this way!}
+}
+
+\ReferenceableSpec
+{Door}
+{Objects that open/close on activate, or teleport PC.}
+{When activated by the PC, doors will either swing open or shut, or alternatively teleport the PC to a target door marker located anywhere in the game world.}
+{
+ \ReferencableParam{Model}{The model file of the object that appears in game. For Morrowind, typically a \emph{.nif}}
+
+ \ReferencableParam{Name}{The name that appears when the player points the crosshair at the model in--game.}
+
+ \ReferencableParam{Script}{The ID of a script with (optional) \OnActivate{} block\footnote{are there other blocks too?}.}
+
+ \ReferencableParam{Open Sound}{The ID of a sound in the subview opened with menu: \emph{Assets$\rightarrow$Sounds}.}
+
+ \ReferencableParam{Close Sound}{}
+}
+
+
+
+
+
 
 
 \ReferenceableSpec
