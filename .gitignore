@@ -41,6 +41,7 @@ resources
 
 ## generated objects
 apps/openmw/config.hpp
+apps/TAGS
 components/version/version.hpp
 docs/mainpage.hpp
 moc_*.cxx

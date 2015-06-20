@@ -9,9 +9,9 @@ void CSMWorld::IdTableProxyModel::updateColumnMap()
 {
     mColumnMap.clear();
 
-    if (mFilter)
+    if (mRowFilter)
     {
-        std::vector<int> columns = mFilter->getReferencedColumns();
+        std::vector<int> columns(mRowFilter->getReferencedColumns());
 
         const IdTableBase& table = dynamic_cast<const IdTableBase&> (*sourceModel());
 
@@ -21,8 +21,8 @@ void CSMWorld::IdTableProxyModel::updateColumnMap()
     }
 }
 
-bool CSMWorld::IdTableProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex& sourceParent)
-    const
+bool CSMWorld::IdTableProxyModel::filterAcceptsRow (int sourceRow,
+                                                    const QModelIndex& sourceParent) const
 {
     // It is not possible to use filterAcceptsColumn() and check for
     // sourceModel()->headerData (sourceColumn, Qt::Horizontal, CSMWorld::ColumnBase::Role_Flags)
@@ -32,15 +32,15 @@ bool CSMWorld::IdTableProxyModel::filterAcceptsRow (int sourceRow, const QModelI
     if (sourceParent.isValid())
         return false;
 
-    if (!mFilter)
+    if (!mRowFilter)
         return true;
 
-    return mFilter->test (
+    return mRowFilter->test (
         dynamic_cast<IdTableBase&> (*sourceModel()), sourceRow, mColumnMap);
 }
 
 CSMWorld::IdTableProxyModel::IdTableProxyModel (QObject *parent)
-: QSortFilterProxyModel (parent)
+    : QSortFilterProxyModel (parent)
 {
     setSortCaseSensitivity (Qt::CaseInsensitive);
 }
@@ -50,10 +50,10 @@ QModelIndex CSMWorld::IdTableProxyModel::getModelIndex (const std::string& id, i
     return mapFromSource (dynamic_cast<IdTableBase&> (*sourceModel()).getModelIndex (id, column));
 }
 
-void CSMWorld::IdTableProxyModel::setFilter (const boost::shared_ptr<CSMFilter::Node>& filter)
+void CSMWorld::IdTableProxyModel::setRowFilter (const boost::shared_ptr<CSMFilter::Node>& filter)
 {
     beginResetModel();
-    mFilter = filter;
+    mRowFilter = filter;
     updateColumnMap();
     endResetModel();
 }

@@ -28,10 +28,12 @@ namespace CSMWorld
         std::string mId;
 
     public:
+        /**
+         * @param parent - parent of column that we are working with
+         */
         NestedTableProxyModel(const QModelIndex& parent,
-                         ColumnBase::Display displayType,
-                         IdTree* parentModel);
-        //parent is the parent of columns to work with. Columnid provides information about the column
+                              ColumnBase::Display displayType,
+                              IdTree* parentModel);
 
         std::string getParentId() const;
 

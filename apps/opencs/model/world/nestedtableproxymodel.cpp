@@ -4,8 +4,8 @@
 #include "idtree.hpp"
 
 CSMWorld::NestedTableProxyModel::NestedTableProxyModel(const QModelIndex& parent,
-                                             ColumnBase::Display columnId,
-                                             CSMWorld::IdTree* parentModel)
+                                                       ColumnBase::Display columnId,
+                                                       CSMWorld::IdTree* parentModel)
     : mParentColumn(parent.column()),
       mMainModel(parentModel)
 {
@@ -90,8 +90,8 @@ QModelIndex CSMWorld::NestedTableProxyModel::parent(const QModelIndex& index) co
 }
 
 QVariant CSMWorld::NestedTableProxyModel::headerData(int section,
-                                                Qt::Orientation orientation,
-                                                int role) const
+                                                     Qt::Orientation orientation,
+                                                     int role) const
 {
     return mMainModel->nestedHeaderData(mParentColumn, section, orientation, role);
 }

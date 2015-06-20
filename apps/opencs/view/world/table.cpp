@@ -674,7 +674,7 @@ void CSVWorld::Table::requestFocus (const std::string& id)
 
 void CSVWorld::Table::recordFilterChanged (boost::shared_ptr<CSMFilter::Node> filter)
 {
-    mProxyModel->setFilter (filter);
+    mProxyModel->setRowFilter (filter);
     tableSizeUpdate();
     selectionSizeUpdate();
 }
