@@ -30,38 +30,42 @@ namespace CSMWorld
             std::vector<UniversalId> mUniversalId;
             QStringList mObjectsFormats;
             const CSMDoc::Document& mDocument;
+
         public:
-            TableMimeData(UniversalId id, const CSMDoc::Document& document);
 
-            TableMimeData(const std::vector<UniversalId>& id, const CSMDoc::Document& document);
+            TableMimeData (UniversalId id, const CSMDoc::Document& document);
 
-            ~TableMimeData();
+            TableMimeData (const std::vector<UniversalId>& id, const CSMDoc::Document& document);
 
-            virtual QStringList formats() const;
+            ~TableMimeData ();
 
-            std::string getIcon() const;
+            virtual QStringList formats () const;
 
-            std::vector<UniversalId> getData() const;
+            std::string getIcon () const;
 
-            bool holdsType(UniversalId::Type type) const;
+            std::vector<UniversalId> getData () const;
 
-            bool holdsType(CSMWorld::ColumnBase::Display type) const;
+            bool holdsType (UniversalId::Type type) const;
 
-            bool fromDocument(const CSMDoc::Document& document) const;
+            bool holdsType (CSMWorld::ColumnBase::Display type) const;
 
-            UniversalId returnMatching(UniversalId::Type type) const;
+            bool fromDocument (const CSMDoc::Document& document) const;
 
-            const CSMDoc::Document* getDocumentPtr() const;
+            UniversalId returnMatching (UniversalId::Type type) const;
 
-            UniversalId returnMatching(CSMWorld::ColumnBase::Display type) const;
+            const CSMDoc::Document* getDocumentPtr () const;
 
-            static CSMWorld::UniversalId::Type convertEnums(CSMWorld::ColumnBase::Display type);
+            UniversalId returnMatching (CSMWorld::ColumnBase::Display type) const;
 
-            static CSMWorld::ColumnBase::Display convertEnums(CSMWorld::UniversalId::Type type);
+            static CSMWorld::UniversalId::Type convertEnums (CSMWorld::ColumnBase::Display type);
 
-            static bool isReferencable(CSMWorld::UniversalId::Type type);
+            static CSMWorld::ColumnBase::Display convertEnums (CSMWorld::UniversalId::Type type);
+
+            static bool isReferencable (CSMWorld::UniversalId::Type type);
+
         private:
-            bool isReferencable(CSMWorld::ColumnBase::Display type) const;
+
+            bool isReferencable (CSMWorld::ColumnBase::Display type) const;
 
     };
 }

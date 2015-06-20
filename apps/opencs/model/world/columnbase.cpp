@@ -6,19 +6,19 @@ CSMWorld::ColumnBase::ColumnBase (int columnId, Display displayType, int flags)
     : mColumnId (columnId), mFlags (flags), mDisplayType (displayType)
 {}
 
-CSMWorld::ColumnBase::~ColumnBase() {}
+CSMWorld::ColumnBase::~ColumnBase () {}
 
-bool CSMWorld::ColumnBase::isUserEditable() const
+bool CSMWorld::ColumnBase::isUserEditable () const
 {
     return isEditable();
 }
 
-std::string CSMWorld::ColumnBase::getTitle() const
+std::string CSMWorld::ColumnBase::getTitle () const
 {
     return Columns::getName (static_cast<Columns::ColumnId> (mColumnId));
 }
 
-int  CSMWorld::ColumnBase::getId() const
+int CSMWorld::ColumnBase::getId () const
 {
     return mColumnId;
 }
@@ -108,12 +108,12 @@ bool CSMWorld::ColumnBase::isScript (Display display)
     return display==Display_ScriptFile || display==Display_ScriptLines;
 }
 
-void CSMWorld::NestableColumn::addColumn(CSMWorld::NestableColumn *column)
+void CSMWorld::NestableColumn::addColumn (CSMWorld::NestableColumn *column)
 {
     mNestedColumns.push_back(column);
 }
 
-const CSMWorld::ColumnBase& CSMWorld::NestableColumn::nestedColumn(int subColumn) const
+const CSMWorld::ColumnBase& CSMWorld::NestableColumn::nestedColumn (int subColumn) const
 {
     if (mNestedColumns.empty())
         throw std::logic_error("Tried to access nested column of the non-nest column");
@@ -121,12 +121,12 @@ const CSMWorld::ColumnBase& CSMWorld::NestableColumn::nestedColumn(int subColumn
     return *mNestedColumns.at(subColumn);
 }
 
-CSMWorld::NestableColumn::NestableColumn(int columnId, CSMWorld::ColumnBase::Display displayType,
+CSMWorld::NestableColumn::NestableColumn (int columnId, CSMWorld::ColumnBase::Display displayType,
     int flag)
     : CSMWorld::ColumnBase(columnId, displayType, flag)
 {}
 
-CSMWorld::NestableColumn::~NestableColumn()
+CSMWorld::NestableColumn::~NestableColumn ()
 {
     for (unsigned int i = 0; i < mNestedColumns.size(); ++i)
     {
@@ -134,13 +134,15 @@ CSMWorld::NestableColumn::~NestableColumn()
     }
 }
 
-bool CSMWorld::NestableColumn::hasChildren() const
+bool CSMWorld::NestableColumn::hasChildren () const
 {
     return !mNestedColumns.empty();
 }
 
 CSMWorld::NestedChildColumn::NestedChildColumn (int id,
-    CSMWorld::ColumnBase::Display display, int flags, bool isEditable)
+                                                CSMWorld::ColumnBase::Display display,
+                                                int flags,
+                                                bool isEditable)
     : NestableColumn (id, display, flags) , mIsEditable(isEditable)
 {}
 

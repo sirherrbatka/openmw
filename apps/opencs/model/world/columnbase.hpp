@@ -156,23 +156,26 @@ namespace CSMWorld
     {
         std::vector<NestableColumn *> mNestedColumns;
 
-    public:
+        public:
 
-        NestableColumn(int columnId, Display displayType, int flag);
+            NestableColumn(int columnId, Display displayType, int flag);
 
-        ~NestableColumn();
+            ~NestableColumn();
 
-        void addColumn(CSMWorld::NestableColumn *column);
+            void addColumn(CSMWorld::NestableColumn *column);
 
-        const ColumnBase& nestedColumn(int subColumn) const;
+            const ColumnBase& nestedColumn(int subColumn) const;
 
-        bool hasChildren() const;
+            bool hasChildren() const;
     };
 
     template<typename ESXRecordT>
     struct Column : public NestableColumn
     {
-        Column (int columnId, Display displayType, int flags = Flag_Table | Flag_Dialogue)
+        Column (int columnId,
+                Display displayType,
+                int flags = Flag_Table | Flag_Dialogue)
+
         : NestableColumn (columnId, displayType, flags) {}
 
         virtual QVariant get (const Record<ESXRecordT>& record) const = 0;
@@ -203,13 +206,16 @@ namespace CSMWorld
 
     struct NestedChildColumn : public NestableColumn
     {
-        NestedChildColumn (int id,
-                Display display, int flags = ColumnBase::Flag_Dialogue, bool isEditable = true);
+            NestedChildColumn (int id,
+                               Display display,
+                               int flags = ColumnBase::Flag_Dialogue,
+                               bool isEditable = true);
 
-        virtual bool isEditable() const;
+            virtual bool isEditable() const;
 
-    private:
-        bool mIsEditable;
+        private:
+
+            bool mIsEditable;
     };
 }
 

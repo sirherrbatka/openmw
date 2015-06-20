@@ -1,8 +1,8 @@
 #ifndef CSM_WOLRD_COLUMNS_H
 #define CSM_WOLRD_COLUMNS_H
 
-#include <string>
 #include <vector>
+#include <string>
 
 #include "columnbase.hpp"
 

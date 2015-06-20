@@ -10,6 +10,7 @@
 #include <QSortFilterProxyModel>
 
 #include "../filter/node.hpp"
+#include "../filter/columnfilterbase.hpp"
 
 namespace CSMWorld
 {
@@ -18,6 +19,7 @@ namespace CSMWorld
             Q_OBJECT
 
             boost::shared_ptr<CSMFilter::Node> mRowFilter;
+            boost::shared_ptr<CSMFilter::ColumnFilterBase> mColumnFilter;
             std::map<int, int> mColumnMap; // column ID, column index in this model (or -1)
 
         private:
@@ -31,14 +33,19 @@ namespace CSMWorld
             virtual QModelIndex getModelIndex (const std::string& id, int column) const;
 
             void setRowFilter (const boost::shared_ptr<CSMFilter::Node>& filter);
+            void setColumnFilter (const boost::shared_ptr<CSMFilter::ColumnFilterBase>& filter);
 
             void refreshFilter();
 
         protected:
 
-            bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
+            bool lessThan(const QModelIndex& left, const QModelIndex& right) const;
 
-            virtual bool filterAcceptsRow (int sourceRow, const QModelIndex& sourceParent) const;
+            virtual bool filterAcceptsRow (int sourceRow,
+                                           const QModelIndex& sourceParent) const;
+
+            virtual bool filterAcceptsColumn (int source_column,
+                                              const QModelIndex& sourceParent) const;
     };
 }
 

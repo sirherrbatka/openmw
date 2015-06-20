@@ -39,6 +39,14 @@ bool CSMWorld::IdTableProxyModel::filterAcceptsRow (int sourceRow,
         dynamic_cast<IdTableBase&> (*sourceModel()), sourceRow, mColumnMap);
 }
 
+bool CSMWorld::IdTableProxyModel::filterAcceptsColumn (int sourceColumn, const QModelIndex& sourceParent) const
+{
+    if (sourceParent.isValid())
+        return false;
+
+    return (!mColumnFilter || mColumnFilter->test(sourceColumn, mColumnMap));
+}
+
 CSMWorld::IdTableProxyModel::IdTableProxyModel (QObject *parent)
     : QSortFilterProxyModel (parent)
 {
@@ -54,6 +62,14 @@ void CSMWorld::IdTableProxyModel::setRowFilter (const boost::shared_ptr<CSMFilte
 {
     beginResetModel();
     mRowFilter = filter;
+    updateColumnMap();
+    endResetModel();
+}
+
+void CSMWorld::IdTableProxyModel::setColumnFilter (const boost::shared_ptr<CSMFilter::ColumnFilterBase>& filter)
+{
+    beginResetModel();
+    mColumnFilter = filter;
     updateColumnMap();
     endResetModel();
 }
