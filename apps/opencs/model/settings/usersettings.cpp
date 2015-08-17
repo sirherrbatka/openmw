@@ -300,6 +300,12 @@ void CSMSettings::UserSettings::buildSettingModelDefaults()
         formatId->setToolTip ("(Default: Blue) Use one of the following formats:" + tooltip);
     }
 
+    declareSection("column-filters", "Column Filters");
+    {
+        Setting *filterList = createSetting(Type_BooleanCategoryView, "registered-filters", "Avaible column filters");
+        // TODO: Add some real settings.
+    }
+
     {
         /******************************************************************
         * There are three types of values:
@@ -636,36 +642,29 @@ CSMSettings::SettingPageMap CSMSettings::UserSettings::settingPageMap() const
     return pageMap;
 }
 
-CSMSettings::Setting *CSMSettings::UserSettings::createSetting
-        (CSMSettings::SettingType type, const QString &name, const QString& label)
+CSMSettings::Setting *CSMSettings::UserSettings::createSetting(CSMSettings::SettingType type,
+                                                               const QString &name,
+                                                               const QString& label)
 {
     Setting *setting = new Setting (type, name, mSection, label);
 
     // set useful defaults
-    int row = 1;
-
-    if (!mSettings.empty())
-        row = mSettings.back()->viewRow()+1;
+    int row = mSettings.empty() ? 1 : mSettings.back()->viewRow()+1;
 
     setting->setViewLocation (row, 1);
 
     setting->setColumnSpan (3);
 
-    int width = 10;
-
-    if (type==Type_CheckBox)
-        width = 40;
+    int width = (type==Type_CheckBox) ? 40 : 10;
 
     setting->setWidgetWidth (width);
 
     if (type==Type_CheckBox)
+    {
         setting->setStyleSheet ("QGroupBox { border: 0px; }");
-
-    if (type==Type_CheckBox)
         setting->setDeclaredValues(QStringList() << "true" << "false");
-
-    if (type==Type_CheckBox)
         setting->setSpecialValueText (setting->getLabel());
+    }
 
     //add declaration to the model
     mSettings.append (setting);

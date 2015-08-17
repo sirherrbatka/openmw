@@ -150,11 +150,13 @@ namespace CSVSettings
 
     class IViewFactory
     {
-    public:
+        public:
+            ///Creation interface for view factories
+            virtual View *createView (CSMSettings::Setting *setting,
+                                      Page *parent) = 0;
 
-        ///Creation interface for view factories
-        virtual View *createView (CSMSettings::Setting *setting,
-                                  Page *parent) = 0;
+            ///This is interface, so virtual destructor
+            virtual ~IViewFactory(){};
     };
 }
-#endif // CSVSETTINGS_VIEW_HPP
+#Endif // CSVSETTINGS_VIEW_HPP

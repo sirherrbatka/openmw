@@ -29,8 +29,10 @@ namespace CSMSettings
 
     public:
 
-        Setting(SettingType typ, const QString &settingName,
-            const QString &pageName, const QString& label = "");
+        Setting(SettingType typ,
+                const QString &settingName,
+                const QString &pageName,
+                const QString& label = "");
 
         void addProxy (const Setting *setting, const QStringList &vals);
         void addProxy (const Setting *setting, const QList <QStringList> &list);

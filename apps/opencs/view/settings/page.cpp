@@ -45,12 +45,13 @@ void CSVSettings::Page::addView (CSMSettings::Setting *setting)
         {
             // hack to put a label
             addWidget(new QLabel(setting->specialValueText()),
-                setting->viewRow(), setting->viewColumn(),
-                setting->rowSpan(), setting->columnSpan());
-            return;
+                      setting->viewRow(),
+                      setting->viewColumn(),
+                      setting->rowSpan(),
+                      setting->columnSpan());
         }
-        else
-            return;
+
+        return;
     }
 
     View *view = mViewFactories[setting->viewType()]->createView(setting, this);
@@ -65,10 +66,10 @@ void CSVSettings::Page::addView (CSMSettings::Setting *setting)
 
     //if this page is an editor page, connect each of it's views up to the
     //UserSettings singleton for signaling back to OpenCS
-    if (setting->isEditorSetting()) {
+    if (setting->isEditorSetting())
+    {
         connect (view, SIGNAL (viewUpdated(const QString&, const QStringList&)),
-                 &CSMSettings::UserSettings::instance(),
-                 SLOT (updateUserSetting (const QString &, const QStringList &)));
+                 &CSMSettings::UserSettings::instance(), SLOT (updateUserSetting (const QString &, const QStringList &)));
     }
 }
 

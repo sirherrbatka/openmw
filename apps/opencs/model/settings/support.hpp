@@ -61,6 +61,7 @@ namespace CSMSettings
         * Odd-numbered values are multi-valued widgets
         */
 
+        Type_Undefined = -1,
         Type_CheckBox = 0,
         Type_RadioButton = 1,
         Type_ListView = 10,
@@ -71,7 +72,7 @@ namespace CSMSettings
         Type_Dial = 27,
         Type_TextArea = 30,
         Type_LineEdit = 31,
-        Type_Undefined = 40
+        Type_BooleanCategoryView = 31
     };
 
 }

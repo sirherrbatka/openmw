@@ -60,8 +60,8 @@ namespace CSMSettings {
         QString settingValue (const QString &settingKey);
 
         ///retrieve a setting object from a given page and setting name
-        Setting *findSetting
-            (const QString &pageName, const QString &settingName = QString());
+        Setting *findSetting (const QString &pageName,
+                              const QString &settingName = QString());
 
         ///remove a setting from the list
         void removeSetting

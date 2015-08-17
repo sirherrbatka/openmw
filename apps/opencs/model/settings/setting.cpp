@@ -1,9 +1,11 @@
 #include "setting.hpp"
 #include "support.hpp"
 
-CSMSettings::Setting::Setting(SettingType typ, const QString &settingName,
-    const QString &pageName, const QString& label)
-: mIsEditorSetting (true)
+CSMSettings::Setting::Setting(SettingType typ,
+                              const QString &settingName,
+                              const QString &pageName,
+                              const QString& label)
+    : mIsEditorSetting (true)
 {
     buildDefaultSetting();
 
@@ -14,7 +16,7 @@ CSMSettings::Setting::Setting(SettingType typ, const QString &settingName,
         setProperty (Property_IsMultiValue, QVariant(true).toString());
 
     //view type is related to setting type by an order of magnitude
-    setProperty (Property_SettingType, QVariant (settingType).toString());
+    setProperty (Property_SettingType, QVariant(settingType).toString());
     setProperty (Property_Page, pageName);
     setProperty (Property_Name, settingName);
     setProperty (Property_Label, label.isEmpty() ? settingName : label);

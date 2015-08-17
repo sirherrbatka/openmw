@@ -19,7 +19,7 @@ namespace CSVSettings
 
     public:
         explicit ListView (CSMSettings::Setting *setting,
-                            Page *parent);
+                           Page *parent);
 
     protected:
 
@@ -53,7 +53,7 @@ namespace CSVSettings
 
     public:
         explicit ListViewFactory (QWidget *parent = 0)
-            : QObject (parent)
+           : QObject (parent)
         {}
 
         ListView *createView (CSMSettings::Setting *setting,
